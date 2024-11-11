@@ -86,7 +86,7 @@ pipeline {
 					}
 					println("Store integration artefact in Git")
 					withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: env.GITCredentials ,usernameVariable: 'GIT_AUTHOR_NAME', passwordVariable: 'GIT_PASSWORD']]) {  
-						bat 'git diff-index --quiet HEAD || git commit -m ' + '\'' + env.GitComment + '\''
+						bat 'git diff-index --quiet HEAD || git commit -am ' + '\'' + env.GITComment + '\''
 						bat('git push https://${GIT_AUTHOR_NAME}:${GIT_PASSWORD}@' + env.GITRepositoryURL + ' HEAD:' + env.GITBranch)
 					}				
 				}
