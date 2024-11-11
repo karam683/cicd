@@ -10,6 +10,7 @@ pipeline {
 		GITRepositoryURL  = "${env.GIT_REPOSITORY_URL}"
 		GITCredentials = "${env.GIT_CRED}"
 		GITBranch = "${env.GIT_BRANCH_NAME}"
+		GITPat="${env.GIT_PAT}"
 		GITFolder = "IntegrationContent/IntegrationArtefacts"
 		GITComment = "Integration Artefacts update from CICD pipeline"
    	}
@@ -85,9 +86,9 @@ pipeline {
 						bat 'git add .'
 					}
 					println("Store integration artefact in Git")
-					withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: env.GITCredentials ,usernameVariable: 'GIT_AUTHOR_NAME', passwordVariable: 'GIT_PASSWORD']]) {  
+					withCredentials([string(credentialsId: env.GITPat , variable:'GIT_PAT')]) {  
 						bat 'git diff-index --quiet HEAD || git commit -m ' + '\" + env.GITComment + \"'
-						bat('git push https://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@' + env.GITRepositoryURL + ' HEAD:' + env.GITBranch)
+						bat('git push https://${GIT_PAT}@' + env.GITRepositoryURL + ' HEAD:' + env.GITBranch)
 					}				
 				}
 			}
