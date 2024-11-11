@@ -87,7 +87,7 @@ pipeline {
 					}
 					println("Store integration artefact in Git")
 					withCredentials([string(credentialsId: env.GITPat , variable:'GIT_PAT')]) {  
-						bat 'git diff-index --quiet HEAD || git commit -m ' + '\" + env.GITComment + \"'
+						bat 'git diff-index --quiet HEAD || git commit -m ' + '\'' + env.GITComment + '\''
 						bat('git push https://$GIT_PAT@' + env.GITRepositoryURL + ' HEAD:' + env.GITBranch)
 					}				
 				}
