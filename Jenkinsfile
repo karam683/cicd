@@ -1,6 +1,10 @@
 pipeline {
 	agent any
 
+	triggers {
+		cron('H * * * *')
+	}
+
 	//Configure the following environment variables before executing the Jenkins Job	
 	environment {
 		IntegrationFlowID = "CreateSaleOrder"
